@@ -1,0 +1,34 @@
+# ============================================================================
+# Core Dependencies
+# ============================================================================
+pydantic>=2.0.0
+pytest>=7.0.0
+pytest-bdd>=7.0.0
+
+# ============================================================================
+# Test Framework Dependencies
+# Install at least one framework based on your needs
+# ============================================================================
+playwright>=1.40.0
+selenium>=4.15.0
+
+# ============================================================================
+# Phoenix Integration Packages (REQUIRED)
+# ============================================================================
+# These packages are required for SmartFusionAI to work
+# Install from local wheel files:
+#   pip install "D:\SmartAutomation\Phoenix-SmartLocatorAI\dist\phoenix_smartlocatorai-1.0.0-py3-none-any.whl"
+#   pip install "D:\SmartAutomation\Phoenix-SmartCaseAI\dist\phoenix_smartcaseai-1.0.0-py3-none-any.whl"
+#
+# Or if available on PyPI:
+phoenix-smartlocatorai>=1.0.0
+phoenix-smartcaseai>=1.0.0
+
+# ============================================================================
+# Development Dependencies (Optional)
+# ============================================================================
+# Uncomment to install development tools:
+# pytest>=7.0.0
+# pytest-cov>=4.0.0
+# black>=23.0.0
+# flake8>=6.0.0

@@ -1,0 +1,23 @@
+{
+  "user_name": {
+    "variable": "self.user_name_input",
+    "locator": "page.locator('#username')"
+  },
+  "password": {
+    "variable": "self.password_input",
+    "locator": "page.locator('#password')"
+  },
+  "submit": {
+    "variable": "self.submit_button",
+    "locator": "page.locator('button[type=submit]')"
+  },
+  "dashboard": {
+    "variable": "self.dashboard_title",
+    "locator": "page.locator('h1.dashboard-title')"
+  },
+  "error_message": {
+    "variable": "self.error_message",
+    "locator": "page.locator('.error-message')"
+  }
+}
+

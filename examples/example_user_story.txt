@@ -1,0 +1,8 @@
+As a user, I want to log in to the application so that I can access my dashboard and manage my account.
+
+Acceptance Criteria:
+- User can enter username and password
+- User can click the login button
+- User is redirected to dashboard upon successful login
+- User sees error message for invalid credentials
+

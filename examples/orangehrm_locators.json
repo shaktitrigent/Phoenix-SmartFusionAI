@@ -1,0 +1,23 @@
+{
+  "username": {
+    "variable": "self.username_input",
+    "locator": "page.locator('input[name=\"username\"]')"
+  },
+  "password": {
+    "variable": "self.password_input",
+    "locator": "page.locator('input[name=\"password\"]')"
+  },
+  "login_button": {
+    "variable": "self.login_button",
+    "locator": "page.locator('button[type=\"submit\"]')"
+  },
+  "dashboard": {
+    "variable": "self.dashboard_title",
+    "locator": "page.locator('h6:has-text(\"Dashboard\")')"
+  },
+  "error_message": {
+    "variable": "self.error_message",
+    "locator": "page.locator('.oxd-alert-content-text')"
+  }
+}
+
