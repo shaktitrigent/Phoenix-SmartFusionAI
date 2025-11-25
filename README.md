@@ -104,15 +104,28 @@ cd Phoenix-SmartFusionAI
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
+# Install core dependencies
 pip install -r requirements.txt
 
-# Install required external libraries (from local wheels or PyPI)
+# Install required external libraries
+# Option 1: From PyPI (if available)
 pip install phoenix-smartlocatorai phoenix-smartcaseai
+
+# Option 2: From local wheel files
+pip install "path/to/phoenix_smartlocatorai-1.0.0-py3-none-any.whl"
+pip install "path/to/phoenix_smartcaseai-1.0.0-py3-none-any.whl"
+
+# Install browser binaries (if using JS rendering with SmartLocatorAI)
+playwright install
 
 # Install in development mode (optional)
 pip install -e .
 ```
+
+**Important Notes:**
+- **SmartLocatorAI** and **SmartCaseAI** are required dependencies. Install them before using URL-based automation or auto mode.
+- **API Keys**: For SmartCaseAI to work, you must set an LLM provider API key (OpenAI, Gemini, or Claude). See [Prerequisites](#prerequisites) section for details.
+- **Browser Binaries**: If you plan to use JavaScript rendering, install Playwright browsers with `playwright install`.
 
 ### Basic Usage
 
@@ -342,9 +355,128 @@ python main.py \
 SmartFusionAI supports URL-based automation where you can provide a URL and automatically generate locators and tests using [Phoenix-SmartLocatorAI](https://github.com/shaktitrigent/Phoenix-SmartLocatorAI).
 
 ### Prerequisites
-- **SmartLocatorAI** must be installed: `pip install phoenix-smartlocatorai`
-- **SmartCaseAI** must be installed: `pip install phoenix-smartcaseai` (for auto mode)
-- API keys for LLM providers (if using SmartCaseAI for BDD generation)
+
+#### Required Packages
+
+**1. Phoenix-SmartLocatorAI**
+```bash
+# Install from PyPI (if available)
+pip install phoenix-smartlocatorai
+
+# Or install from local wheel file
+pip install "path/to/phoenix_smartlocatorai-1.0.0-py3-none-any.whl"
+```
+
+**Dependencies for SmartLocatorAI:**
+- Python 3.8+
+- `beautifulsoup4` - For HTML parsing
+- `requests` - For URL fetching
+- `playwright` or `selenium` - For browser automation (optional, for JS rendering)
+
+**2. Phoenix-SmartCaseAI** (Required for auto mode and BDD generation)
+```bash
+# Install from PyPI (if available)
+pip install phoenix-smartcaseai
+
+# Or install from local wheel file
+pip install "path/to/phoenix_smartcaseai-1.0.0-py3-none-any.whl"
+```
+
+**Dependencies for SmartCaseAI:**
+- Python 3.8+
+- LLM provider SDKs (based on your chosen provider):
+  - **OpenAI**: `openai` package
+  - **Google Gemini**: `google-generativeai` package
+  - **Anthropic Claude**: `anthropic` package
+- File processing libraries (automatically handled by SmartCaseAI):
+  - `pypdfium2` or `pypdf` - For PDF processing
+  - `python-docx` - For Word document processing
+  - `Pillow` - For image processing
+  - `pytesseract` - For OCR (if needed)
+
+#### Environment Variables (Required for SmartCaseAI)
+
+SmartCaseAI requires API keys for LLM providers. Set the appropriate environment variable based on your chosen provider:
+
+**For OpenAI:**
+```bash
+# Windows
+set OPENAI_API_KEY=your_openai_api_key_here
+
+# Linux/Mac
+export OPENAI_API_KEY=your_openai_api_key_here
+```
+
+**For Google Gemini:**
+```bash
+# Windows
+set GEMINI_API_KEY=your_gemini_api_key_here
+
+# Linux/Mac
+export GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+**For Anthropic Claude:**
+```bash
+# Windows
+set ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# Linux/Mac
+export ANTHROPIC_API_KEY=your_anthropic_api_key_here
+```
+
+**Alternative: Create `.env` file**
+```bash
+# Create .env file in project root
+OPENAI_API_KEY=your_openai_api_key_here
+# OR
+GEMINI_API_KEY=your_gemini_api_key_here
+# OR
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+```
+
+#### Browser Binaries (For SmartLocatorAI with JS Rendering)
+
+If you plan to use JavaScript rendering with SmartLocatorAI, install browser binaries:
+
+**For Playwright:**
+```bash
+playwright install
+# Or install specific browser
+playwright install chromium
+```
+
+**For Selenium:**
+- Download and configure WebDriver for your browser
+- Or use `webdriver-manager` package for automatic management
+
+#### Getting API Keys
+
+**OpenAI:**
+1. Sign up at [OpenAI Platform](https://platform.openai.com/)
+2. Navigate to API Keys section
+3. Create a new secret key
+4. Set as environment variable: `OPENAI_API_KEY`
+
+**Google Gemini:**
+1. Get API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Set as environment variable: `GEMINI_API_KEY`
+
+**Anthropic Claude:**
+1. Sign up at [Anthropic Console](https://console.anthropic.com/)
+2. Navigate to API Keys section
+3. Create a new API key
+4. Set as environment variable: `ANTHROPIC_API_KEY`
+
+#### Quick Setup Checklist
+
+- [ ] Python 3.8+ installed
+- [ ] Virtual environment created and activated
+- [ ] `phoenix-smartlocatorai` installed
+- [ ] `phoenix-smartcaseai` installed
+- [ ] LLM API key obtained and configured (for SmartCaseAI)
+- [ ] Browser binaries installed (if using JS rendering with SmartLocatorAI)
+- [ ] All dependencies from `requirements.txt` installed
 
 ### SmartLocatorAI Integration
 
