@@ -1,0 +1,479 @@
+{
+  "feature_name": "User Login",
+  "total_steps": 36,
+  "matched_steps": 2,
+  "unmatched_steps": 34,
+  "mappings": [
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the user is on the login page",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the user is on the login page"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the user has valid credentials",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the user has valid credentials"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user enters their username",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user enters their username"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user enters their password",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user enters their password"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user clicks the login button",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user clicks the login button"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the system should authenticate the user",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the system should authenticate the user"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the user should be redirected to the dashboard",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the user should be redirected to the dashboard"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the user should see their name displayed on the dashboard",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the user should see their name displayed on the dashboard"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the user is on the login page",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the user is on the login page"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the user has invalid credentials",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the user has invalid credentials"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user enters their username",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user enters their username"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user enters their password",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user enters their password"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user clicks the login button",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user clicks the login button"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the system should fail to authenticate the user",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the system should fail to authenticate the user"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the login page should remain displayed",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the login page should remain displayed"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the user should see an error message saying 'Invalid credentials'",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the user should see an error message saying 'Invalid credentials'"
+      },
+      "matched": true,
+      "locator_variable": "self.a_link",
+      "match_type": "partial",
+      "warning": "Partial match: 'an' -> 'a'"
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the user is on the login page",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the user is on the login page"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the username field is empty",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the username field is empty"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user enters their password",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user enters their password"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user clicks the login button",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user clicks the login button"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the system should show a field validation error for the username",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the system should show a field validation error for the username"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the user should remain on the login page",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the user should remain on the login page"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the user is on the login page",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the user is on the login page"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the password field is empty",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the password field is empty"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user enters their username",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user enters their username"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user clicks the login button",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user clicks the login button"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the system should show a field validation error for the password",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the system should show a field validation error for the password"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the user should remain on the login page",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the user should remain on the login page"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the user is on the login page",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the user is on the login page"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Given",
+        "text": "the user has an SQL injection string as username",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Given the user has an SQL injection string as username"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user enters the SQL injection string",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user enters the SQL injection string"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user enters a password",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user enters a password"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "When",
+        "text": "the user clicks the login button",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "When the user clicks the login button"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the system should reject the login attempt",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the system should reject the login attempt"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the system should not process the SQL query",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the system should not process the SQL query"
+      },
+      "matched": false,
+      "locator_variable": null,
+      "match_type": null,
+      "warning": null
+    },
+    {
+      "step": {
+        "step_type": "Then",
+        "text": "the user should see an error message",
+        "tokens": [],
+        "mapped_locator": null,
+        "original_text": "Then the user should see an error message"
+      },
+      "matched": true,
+      "locator_variable": "self.a_link",
+      "match_type": "partial",
+      "warning": "Partial match: 'an' -> 'a'"
+    }
+  ],
+  "unmatched_tokens": [],
+  "warnings": [],
+  "validation_results": {}
+}

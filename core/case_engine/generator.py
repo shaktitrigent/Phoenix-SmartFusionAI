@@ -1,7 +1,8 @@
 """BDD test case generator (integrates SmartCaseAI logic)."""
 
 import re
-from typing import List, Optional
+import json
+from typing import List, Optional, Union
 from pathlib import Path
 
 # External library import (required dependency)
@@ -192,11 +193,124 @@ class BDDGenerator:
         generator = StoryBDDGenerator(llm_provider=llm_provider)
         feature_content = generator.generate_test_cases(
             user_story=user_story,
-            output_format="gherkin",
+            output_format="bdd",
             num_cases=num_cases,
             additional_files=context_files
         )
         
-        # Parse the generated feature
-        return self.parse_feature_content(feature_content)
+        # SmartCaseAI returns JSON when output_format="bdd", need to parse it
+        if isinstance(feature_content, str):
+            # Try to parse as JSON first
+            try:
+                import json
+                feature_data = json.loads(feature_content)
+                return self._parse_json_bdd(feature_data)
+            except (json.JSONDecodeError, ValueError):
+                # If not JSON, treat as Gherkin text
+                return self.parse_feature_content(feature_content)
+        elif isinstance(feature_content, (list, dict)):
+            # Already parsed JSON
+            return self._parse_json_bdd(feature_content)
+        else:
+            # Fallback to string parsing
+            return self.parse_feature_content(str(feature_content))
+    
+    def _parse_json_bdd(self, data: Union[list, dict]) -> BDDFeature:
+        """Parse JSON BDD format from SmartCaseAI.
+        
+        Args:
+            data: JSON data (list or dict) from SmartCaseAI
+            
+        Returns:
+            BDDFeature object
+        """
+        from core.utils.models import BDDFeature, BDDScenario, BDDStep, StepType
+        
+        # Handle list format (multiple scenarios)
+        if isinstance(data, list):
+            if not data:
+                return BDDFeature(feature_name="", description="")
+            # Use first item for feature name, process all for scenarios
+            first_item = data[0]
+            feature_name = first_item.get("feature", "Generated Feature")
+            scenarios = []
+            
+            for item in data:
+                scenario_name = item.get("scenario", "Generated Scenario")
+                scenario = BDDScenario(name=scenario_name, tags=[])
+                
+                # Parse Given steps
+                for step_text in item.get("given", []):
+                    if isinstance(step_text, str):
+                        scenario.steps.append(BDDStep(
+                            step_type=StepType.GIVEN,
+                            text=step_text,
+                            tokens=self._extract_tokens(step_text),
+                            original_text=f"Given {step_text}"
+                        ))
+                
+                # Parse When steps
+                for step_text in item.get("when", []):
+                    if isinstance(step_text, str):
+                        scenario.steps.append(BDDStep(
+                            step_type=StepType.WHEN,
+                            text=step_text,
+                            tokens=self._extract_tokens(step_text),
+                            original_text=f"When {step_text}"
+                        ))
+                
+                # Parse Then steps
+                for step_text in item.get("then", []):
+                    if isinstance(step_text, str):
+                        scenario.steps.append(BDDStep(
+                            step_type=StepType.THEN,
+                            text=step_text,
+                            tokens=self._extract_tokens(step_text),
+                            original_text=f"Then {step_text}"
+                        ))
+                
+                scenarios.append(scenario)
+            
+            return BDDFeature(feature_name=feature_name, description="", scenarios=scenarios)
+        
+        # Handle dict format (single scenario)
+        elif isinstance(data, dict):
+            feature_name = data.get("feature", "Generated Feature")
+            scenario_name = data.get("scenario", "Generated Scenario")
+            scenario = BDDScenario(name=scenario_name, tags=[])
+            
+            # Parse Given steps
+            for step_text in data.get("given", []):
+                if isinstance(step_text, str):
+                    scenario.steps.append(BDDStep(
+                        step_type=StepType.GIVEN,
+                        text=step_text,
+                        tokens=self._extract_tokens(step_text),
+                        original_text=f"Given {step_text}"
+                    ))
+            
+            # Parse When steps
+            for step_text in data.get("when", []):
+                if isinstance(step_text, str):
+                    scenario.steps.append(BDDStep(
+                        step_type=StepType.WHEN,
+                        text=step_text,
+                        tokens=self._extract_tokens(step_text),
+                        original_text=f"When {step_text}"
+                    ))
+            
+            # Parse Then steps
+            for step_text in data.get("then", []):
+                if isinstance(step_text, str):
+                    scenario.steps.append(BDDStep(
+                        step_type=StepType.THEN,
+                        text=step_text,
+                        tokens=self._extract_tokens(step_text),
+                        original_text=f"Then {step_text}"
+                    ))
+            
+            return BDDFeature(feature_name=feature_name, description="", scenarios=[scenario])
+        
+        else:
+            raise ValueError(f"Unexpected data type for JSON BDD: {type(data)}")
 

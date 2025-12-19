@@ -61,7 +61,8 @@ class SmartFusionPipeline:
         user_story_path: Optional[str] = None,
         bdd_feature_path: Optional[str] = None,
         locator_file_path: Optional[str] = None,
-        dom_snapshot_path: Optional[str] = None
+        dom_snapshot_path: Optional[str] = None,
+        context_files: Optional[list] = None
     ):
         """Run the complete fusion pipeline.
         
@@ -98,8 +99,11 @@ class SmartFusionPipeline:
             # Use SmartCaseAI directly through BDDGenerator
             feature = self.bdd_generator.generate_from_story(
                 user_story, 
-                llm_provider=getattr(self.config, 'llm_provider', 'openai')
+                llm_provider=getattr(self.config, 'llm_provider', 'openai'),
+                context_files=context_files
             )
+            if context_files:
+                print(f"   [INFO] Using {len(context_files)} context file(s) for BDD generation")
             print(f"   [OK] Generated feature from user story using SmartCaseAI")
         else:
             raise ValueError("Either bdd_feature_path or user_story_path is required")
@@ -297,7 +301,7 @@ class SmartFusionPipeline:
         # SmartCaseAI handles everything - file processing, LLM calls, BDD generation
         feature_content = bdd_generator.generate_test_cases(
             user_story=user_story_text,
-            output_format="gherkin",
+            output_format="bdd",
             additional_files=context_files  # SmartCaseAI processes these automatically
         )
         
@@ -308,8 +312,19 @@ class SmartFusionPipeline:
             f.write(feature_content)
         print(f"   [OK] Generated BDD feature: {feature_file_path}")
         
-        # Parse the generated feature
-        feature = self.bdd_generator.parse_feature_content(feature_content)
+        # Parse the generated feature (handle both JSON and Gherkin formats)
+        if isinstance(feature_content, str):
+            # Try JSON first, then Gherkin
+            try:
+                import json
+                feature_data = json.loads(feature_content)
+                feature = self.bdd_generator._parse_json_bdd(feature_data)
+            except (json.JSONDecodeError, ValueError):
+                feature = self.bdd_generator.parse_feature_content(feature_content)
+        elif isinstance(feature_content, (list, dict)):
+            feature = self.bdd_generator._parse_json_bdd(feature_content)
+        else:
+            feature = self.bdd_generator.parse_feature_content(str(feature_content))
         
         print(f"   [OK] Generated {len(feature.scenarios)} scenarios")
         
@@ -387,8 +402,8 @@ def main():
     parser.add_argument(
         "--locator-file",
         type=str,
-        required=True,
-        help="Path to locator file (page.py or locators.json)"
+        required=False,
+        help="Path to locator file (page.py or locators.json). Not required if using --generate-locators"
     )
     
     parser.add_argument(
@@ -534,6 +549,11 @@ def main():
     
     # Handle URL-based locator generation
     locator_file_path = args.locator_file
+    
+    # Validate generate-locators usage
+    if args.generate_locators and not args.url and not args.dom_snapshot:
+        parser.error("--generate-locators requires either --url or --dom-snapshot")
+    
     if args.generate_locators and args.url:
         print("Generating locators from URL using SmartLocatorAI...")
         # Use SmartLocatorAI modular components
@@ -585,10 +605,14 @@ def main():
             print(f"Processing User Story {i}/{len(user_stories)}: {story_path}")
             print('='*60)
             try:
+                # Convert case_study to context_files list if provided
+                context_files = [args.case_study] if args.case_study else None
+                
                 result = pipeline.run(
                     user_story_path=story_path,
                     locator_file_path=locator_file_path,
-                    dom_snapshot_path=args.dom_snapshot
+                    dom_snapshot_path=args.dom_snapshot,
+                    context_files=context_files
                 )
                 results.append(result)
             except Exception as e:
@@ -621,11 +645,15 @@ def main():
     else:
         # Single file processing
         try:
+            # Convert case_study to context_files list if provided
+            context_files = [args.case_study] if args.case_study else None
+            
             pipeline.run(
                 user_story_path=args.user_story,
                 bdd_feature_path=args.bdd_feature,
                 locator_file_path=locator_file_path,
-                dom_snapshot_path=args.dom_snapshot
+                dom_snapshot_path=args.dom_snapshot,
+                context_files=context_files
             )
         except Exception as e:
             print(f"\n[ERROR] {e}", file=sys.stderr)

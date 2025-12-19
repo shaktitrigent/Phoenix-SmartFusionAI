@@ -1,0 +1,248 @@
+{
+  "feature": "User Login",
+  "scenarios": [
+    {
+      "scenario": "User logs in with valid credentials",
+      "steps": [
+        {
+          "step_type": "Given",
+          "step_text": "the user is on the login page",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Given",
+          "step_text": "the user has valid credentials",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user enters their username",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user enters their password",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user clicks the login button",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the system should authenticate the user",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the user should be redirected to the dashboard",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the user should see their name displayed on the dashboard",
+          "tokens": [
+            "their"
+          ],
+          "matched_locators": []
+        }
+      ]
+    },
+    {
+      "scenario": "User logs in with invalid credentials",
+      "steps": [
+        {
+          "step_type": "Given",
+          "step_text": "the user is on the login page",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Given",
+          "step_text": "the user has invalid credentials",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user enters their username",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user enters their password",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user clicks the login button",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the system should fail to authenticate the user",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the login page should remain displayed",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the user should see ${self.a_link} error message saying 'Invalid credentials'",
+          "tokens": [],
+          "matched_locators": []
+        }
+      ]
+    },
+    {
+      "scenario": "User attempts to log in with an empty username",
+      "steps": [
+        {
+          "step_type": "Given",
+          "step_text": "the user is on the login page",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Given",
+          "step_text": "the username field is empty",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user enters their password",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user clicks the login button",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the system should show a field validation error for the username",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the user should remain on the login page",
+          "tokens": [],
+          "matched_locators": []
+        }
+      ]
+    },
+    {
+      "scenario": "User attempts to log in with an empty password",
+      "steps": [
+        {
+          "step_type": "Given",
+          "step_text": "the user is on the login page",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Given",
+          "step_text": "the password field is empty",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user enters their username",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user clicks the login button",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the system should show a field validation error for the password",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the user should remain on the login page",
+          "tokens": [],
+          "matched_locators": []
+        }
+      ]
+    },
+    {
+      "scenario": "User logs in attempting SQL injection",
+      "steps": [
+        {
+          "step_type": "Given",
+          "step_text": "the user is on the login page",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Given",
+          "step_text": "the user has an SQL injection string as username",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user enters the SQL injection string",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user enters a password",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "When",
+          "step_text": "the user clicks the login button",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the system should reject the login attempt",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the system should not process the SQL query",
+          "tokens": [],
+          "matched_locators": []
+        },
+        {
+          "step_type": "Then",
+          "step_text": "the user should see ${self.a_link} error message",
+          "tokens": [],
+          "matched_locators": []
+        }
+      ]
+    }
+  ]
+}

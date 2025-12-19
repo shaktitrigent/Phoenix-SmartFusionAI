@@ -1,8 +1,36 @@
-As a user, I want to log in to the application so that I can access my dashboard and manage my account.
+User Story — Login to OrangeHRM Application
 
-Acceptance Criteria:
-- User can enter username and password
-- User can click the login button
-- User is redirected to dashboard upon successful login
-- User sees error message for invalid credentials
+As an HR user, I want to log in to the OrangeHRM application so that I can access my dashboard and perform my HR-related tasks (like managing employees, leave, reports).
+Acceptance Criteria
 
+The login page displays fields for Username and Password.
+The page shows a Login button.
+The Username field accepts a valid username (e.g., “Admin”).
+The Password field accepts a valid password (e.g., “admin123”).
+When valid credentials are entered and the Login button is clicked:
+Authentication succeeds.
+The user is redirected to the application’s Dashboard page.
+
+The Dashboard shows the logged-in user’s name and key navigation items (e.g., PIM, Leave, Time, Reports).
+
+When invalid credentials are entered and the Login button is clicked:
+
+Authentication fails.
+
+The login page is NOT redirected.
+
+An error message is displayed (e.g., “Invalid credentials”).
+
+The user can retry login.
+
+The login form handles common edge-cases:
+
+Empty username → field validation error.
+
+Empty password → field validation error.
+
+SQL special characters or scripts → no injection allowed, safe error handling.
+
+The system uses HTTPS and ensures login request & credentials are transmitted securely.
+
+After successful login, the “Logout” option is available and works (optional but good to include in follow-on story).

@@ -87,11 +87,66 @@ class LocatorParser:
         # Check if this is SmartLocatorAI format (has "locators" array)
         if isinstance(data, dict) and "locators" in data:
             # SmartLocatorAI format - parse from locators array
-            for locator_entry in data.get("locators", []):
-                # Extract from SmartLocatorAI format
-                custom_name = locator_entry.get("custom_name", "")
-                locator_value = locator_entry.get("locator_value", "")
-                locator_type_str = locator_entry.get("locator_type", "CSS Selector")
+            for idx, locator_entry in enumerate(data.get("locators", [])):
+                # Handle different formats from dom_scanner
+                # Format 1: Full format with custom_name, locator_value, locator_type
+                if "custom_name" in locator_entry and "locator_value" in locator_entry:
+                    custom_name = locator_entry.get("custom_name", "")
+                    locator_value = locator_entry.get("locator_value", "")
+                    locator_type_str = locator_entry.get("locator_type", "CSS Selector")
+                # Format 2: Raw element dict from dom_scanner (tag, href, text, etc.)
+                else:
+                    # Extract element information from raw dict
+                    tag = locator_entry.get("tag", "")
+                    text = locator_entry.get("text", "").strip()
+                    href = locator_entry.get("href", "")
+                    name = locator_entry.get("name", "")
+                    id_attr = locator_entry.get("id", "")
+                    class_attr = locator_entry.get("class", "")
+                    
+                    # Generate a meaningful name
+                    if text:
+                        custom_name = text[:50].replace(" ", "_")  # Use text as name
+                    elif name:
+                        custom_name = name
+                    elif href:
+                        custom_name = f"{tag}_link"
+                    elif id_attr:
+                        custom_name = id_attr
+                    elif tag:
+                        custom_name = f"{tag}_element_{idx}"
+                    else:
+                        custom_name = f"element_{idx}"
+                    
+                    # Build locator value
+                    if id_attr:
+                        locator_value = f"#{id_attr}"
+                        locator_type_str = "CSS Selector"
+                    elif name:
+                        locator_value = f"[name='{name}']"
+                        locator_type_str = "CSS Selector"
+                    elif class_attr:
+                        # Use first class
+                        first_class = class_attr.split()[0] if isinstance(class_attr, str) else (class_attr[0] if class_attr else "")
+                        if first_class:
+                            locator_value = f".{first_class}"
+                            locator_type_str = "CSS Selector"
+                        else:
+                            locator_value = tag
+                            locator_type_str = "CSS Selector"
+                    elif href:
+                        locator_value = f"a[href='{href}']"
+                        locator_type_str = "CSS Selector"
+                    elif text:
+                        # Escape quotes in text
+                        text_escaped = text.replace("'", "\\'").replace('"', '\\"')
+                        locator_value = f"{tag}:has-text('{text_escaped[:30]}')"
+                        locator_type_str = "CSS Selector"
+                    elif tag:
+                        locator_value = tag
+                        locator_type_str = "CSS Selector"
+                    else:
+                        continue  # Skip if no usable information
                 
                 # Normalize the name
                 normalized_name = self._normalize_name(custom_name) if custom_name else ""
@@ -106,8 +161,9 @@ class LocatorParser:
                     # Playwright role/text locator
                     locator_expr = f"page.get_by_role('{locator_value}')" if "Role" in locator_type_str else f"page.get_by_text('{locator_value}')"
                 else:
-                    # CSS or XPath
-                    locator_expr = f"page.locator('{locator_value}')"
+                    # CSS or XPath - escape quotes
+                    locator_value_escaped = locator_value.replace("'", "\\'")
+                    locator_expr = f"page.locator('{locator_value_escaped}')"
                 
                 locator_info = LocatorInfo(
                     variable_name=var_name,
